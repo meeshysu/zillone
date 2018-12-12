@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import { Button } from 'reactstrap';
-// import logo from './logo.svg';
 import connection from '../helpers/data/connection';
 import Auth from '../components/Auth/Auth';
 import Listings from '../components/Listings/Listings';
@@ -24,7 +24,28 @@ class App extends Component {
 
   componentDidMount() {
     connection();
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authed: true,
+        });
+      } else {
+        this.setState({
+          authed: false,
+        });
+      }
+    });
+    // this is a react thing. it is adding a listener.
+    // every time this fires, it is going to return the user from the auth state change.
+    // and if it exists, it will set the auth to true. if not false.
+    // when the page reloads it's going to fire it off.
   }
+
+  componentWillUnmount() {
+    this.removeListener();
+  }
+
+  // react method so no arrow.
 
   isAuthenticated = () => {
     // whenever modifying state you need to use set state
