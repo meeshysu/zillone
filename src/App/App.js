@@ -4,9 +4,14 @@ import { Button } from 'reactstrap';
 import logo from './logo.svg';
 import './App.scss';
 
-class App extends Component {
+// component is also a class. my class 'app' gets all the info from component.
+// where you have variables, you put {} around. look at logo for i.e.
+// you can use javascript in jsx.
+// put everything in a container bc you cannot have siblings in a div.
+class App extends Component { // you must have a render! you have to have a return.
+  // the return is basically what html that you want. it's written in jsx, the language of html?
   render() {
-    console.log(this);
+    console.log(this); // this refers to the actual class itself
     return (
       <div className="App">
         <header className="App-header">
