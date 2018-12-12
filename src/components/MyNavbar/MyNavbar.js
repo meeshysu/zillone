@@ -17,15 +17,18 @@ class MyNavbar extends React.Component {
   };
 
   render() {
+    // spot to define variables you use in dom stuff.
+    const { isAuthed, logoutClickEvent } = this.props;
+    // make a variable that is equal to this.propped.isauthed.
     return (
       <div className="my-navbar">
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">Zillone: The Best Place To Buy Your Crappy House</NavbarBrand>
+          <NavbarBrand href="/">Zillone: Find Your Crappy House Today!</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Logout</NavLink>
+                { isAuthed ? <NavLink onClick={logoutClickEvent}>Logout</NavLink> : '' }
               </NavItem>
             </Nav>
           </Collapse>

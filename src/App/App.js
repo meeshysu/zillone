@@ -6,6 +6,7 @@ import connection from '../helpers/data/connection';
 import Auth from '../components/Auth/Auth';
 import Listings from '../components/Listings/Listings';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
+import authRequest from '../helpers/data/authRequests';
 import './App.scss';
 
 // component is also a class. my class 'app' gets all the info from component.
@@ -36,17 +37,25 @@ class App extends Component {
   };
 
   render() {
+    const logoutClickEvent = () => {
+      authRequest.logoutUser();
+      this.setState({ authed: false });
+      // kills the cookies in your local storage. hides the logout, etc.
+      // put it here bc it is a click event. reserve stuff above for things
+      // that do direct crud methods.
+    };
+
     if (!this.state.authed) {
       return (
         <div className="App">
-          <MyNavbar />
+          <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
           <Auth isAuthenticated={this.isAuthenticated}/>
         </div>
       );
     }
     return (
       <div className="App">
-        <MyNavbar />
+        <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
         <Listings />
       </div>
     );
@@ -54,3 +63,5 @@ class App extends Component {
 }
 
 export default App;
+
+// this.state.authed to call out what it is, not set it.
