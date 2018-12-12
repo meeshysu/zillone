@@ -14,9 +14,7 @@ import './App.scss';
 // the return is basically what html that you want. it's written in jsx, the language of html?
 
 // FIREBASE CALL
-class App extends Component { 
-
-
+class App extends Component {
   componentDidMount() {
     connection();
   }
