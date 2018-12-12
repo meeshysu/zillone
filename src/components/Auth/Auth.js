@@ -7,7 +7,9 @@ class Auth extends React.Component {
     e.preventDefault();
     // call authenticate method. write auth request.
     authRequests.authenticate().then(() => {
-      // do something here in a bit
+      this.props.isAuthenticated();
+      // execute so (). what it is doing is looking at its properties
+      // this function is getting passed into me. it executes it on App.js not right here?
     }).catch(err => console.error('there is an error with auth', err));
   }
 
