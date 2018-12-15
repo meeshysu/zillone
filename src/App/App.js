@@ -8,6 +8,7 @@ import Listings from '../components/Listings/Listings';
 import Buildings from '../components/Building/Building';
 import ListingForm from '../components/ListingForm/ListingForm';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
+import listingRequests from '../helpers/data/listingRequests';
 import authRequest from '../helpers/data/authRequests';
 import './App.scss';
 
@@ -22,9 +23,16 @@ import './App.scss';
 class App extends Component {
   state = {
     authed: false,
+    listings: [],
   }
 
   componentDidMount() {
+    listingRequests.getRequest()
+      .then((listings) => {
+        this.setState({ listings });
+      })
+      .catch(err => console.error('error with listing GET', err));
+
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -82,7 +90,7 @@ class App extends Component {
       <div className="App">
         <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
         <div className="row">
-          <Listings />
+          <Listings listings={this.state.listings} />
           <Buildings />
         </div>
         <div className="row">
@@ -96,3 +104,8 @@ class App extends Component {
 export default App;
 
 // this.state.authed to call out what it is, not set it.
+// setState rerenders the components and you need this.state to update it.
+// state tells what the application needs to rerender.
+// state holds all the data for your applications. state is a variable.
+// the entire interface depends on listings.
+// listings has an empty array so that we can pass back to components.
