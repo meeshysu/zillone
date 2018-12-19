@@ -16,6 +16,10 @@ const defaultListing = {
 };
 
 class ListingForm extends React.Component {
+  static PropTypes = {
+    onSubmit: PropTypes.func,
+  }
+
   state = {
     newListing: defaultListing,
   }
@@ -55,6 +59,7 @@ class ListingForm extends React.Component {
     const { onSubmit } = this.props; // bc you're passing it.
     const myListing = { ...this.state.newListing };
     myListing.uid = authRequests.getCurrentUid();
+    onSubmit(myListing);
   }
 
   render() {
