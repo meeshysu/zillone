@@ -7,16 +7,19 @@ import './Listings.scss';
 class Listings extends React.Component {
   static propTypes = {
     listings: PropTypes.arrayOf(listingShape),
+    deleteSingleListing: PropTypes.func,
   }
 
   render() {
-    const { listings } = this.props;
+    const { listings, deleteSingleListing } = this.props;
     const listingsItemComponents = listings.map(listing => (
       <ListingItem
-        listing={listing}
         key={listing.id}
+        listing={listing}
+        deleteSingleListing={deleteSingleListing}
       />
     ));
+    // we have no delete listing so we move along to listing item
     // want to map over prop listings everywhere so write this.props.
     // so if you want to loop over, just listings.map.
     // map loops through each item of an array and lets you make changes to it. returns a new array.

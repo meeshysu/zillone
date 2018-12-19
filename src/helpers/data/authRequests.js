@@ -10,7 +10,10 @@ const logoutUser = () => firebase.auth().signOut();
 
 // github auth provider.
 
+const getCurrentUid = () => firebase.auth().currentUser.uid;
+
 export default {
   authenticate,
   logoutUser,
+  getCurrentUid,
 };

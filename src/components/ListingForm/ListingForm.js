@@ -16,7 +16,7 @@ const defaultListing = {
 };
 
 class ListingForm extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     onSubmit: PropTypes.func,
   }
 
@@ -60,6 +60,7 @@ class ListingForm extends React.Component {
     const myListing = { ...this.state.newListing };
     myListing.uid = authRequests.getCurrentUid();
     onSubmit(myListing);
+    this.setState({ newListing: defaultListing });
   }
 
   render() {
@@ -68,7 +69,6 @@ class ListingForm extends React.Component {
       <div className="ListingForm col">
         <h2>Add New Listing</h2>
         <form onSubmit={this.formSubmit}>
-        <form>
           <div className="form-group">
             <label htmlFor="address">Address</label>
             <input
@@ -82,7 +82,6 @@ class ListingForm extends React.Component {
             />
           </div>
           <button className="btn btn-secondary">Save Listing</button>
-        </form>
         </form>
       </div>
     );
