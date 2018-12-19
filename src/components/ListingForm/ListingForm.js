@@ -2,6 +2,7 @@ import React from 'react';
 import './ListingForm.scss';
 import PropTypes from 'prop-types';
 import authRequests from '../../helpers/data/authRequests';
+import listingRequests from '../../helpers/data/listingRequests';
 
 const defaultListing = {
   address: '',
@@ -18,6 +19,8 @@ const defaultListing = {
 class ListingForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
+    isEditing: PropTypes.bool,
+    editId: PropTypes.string,
   }
 
   state = {
@@ -63,22 +66,45 @@ class ListingForm extends React.Component {
     this.setState({ newListing: defaultListing });
   }
 
+  componentDidUpdate(prevProps) {
+    const { isEditing, editId } = this.props;
+    if (prevProps !== this.props && isEditing) {
+      listingRequests.getSingleListing(editId)
+        .then((listing) => {
+          this.setState({ newListing: listing.data });
+        })
+        .catch((error) => {
+          console.log('error in componentDidUpdate', error);
+        });
+    }
+  }
+  // runs when pop and state changes.
+  // if new props is not equal to now props and isEdited
+  // listing.data to get that one listing back
+
   render() {
     const { newListing } = this.state;
+    const { isEditing } = this.props;
+    const title = () => {
+      if (isEditing) {
+        return <h2>Edit Listing:</h2>;
+      }
+      return <h2>Add New Listing:</h2>;
+    };
     return (
       <div className="ListingForm col">
-        <h2>Add New Listing</h2>
+        {title()}
         <form onSubmit={this.formSubmit}>
           <div className="form-group">
             <label htmlFor="address">Address</label>
             <input
-            type="text"
-            className="form-control"
-            id="address"
-            aria-describedby="addressHelp"
-            placeholder="1234 Main Street Nashville, TN 37209"
-            value={newListing.address}
-            onChange={this.addressChange}
+              type="text"
+              className="form-control"
+              id="address"
+              aria-describedby="addressHelp"
+              placeholder="1234 Main Street Nashville, TN 37209"
+              value={newListing.address}
+              onChange={this.addressChange}
             />
           </div>
           <button className="btn btn-secondary">Save Listing</button>
