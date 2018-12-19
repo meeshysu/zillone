@@ -87,14 +87,26 @@ class App extends Component {
   // we call listing component thru the listings, so go there
 
   formSubmitEvent = (newListing) => {
-    listingRequests.postRequest(newListing)
-      .then(() => {
-        listingRequests.getRequest()
-          .then((listings) => {
-            this.setState({ listings });
-          });
-      })
-      .catch(error => console.error('error on formSubmitEvent', error));
+    const { isEditing, editId } = this.state;
+    if (isEditing) {
+      listingRequests.putRequest(editId, newListing)
+        .then(() => {
+          listingRequests.getRequest()
+            .then((listings) => {
+              this.setState({ listings });
+            });
+        })
+        .catch(error => console.error('error on formSubmitEvent', error));
+    } else {
+      listingRequests.postRequest(newListing)
+        .then(() => {
+          listingRequests.getRequest()
+            .then((listings) => {
+              this.setState({ listings });
+            });
+        })
+        .catch(error => console.error('error on formSubmitEvent', error));
+    }
   }
 
   passListingToEdit = listingId => this.setState({ isEditing: true, editId: listingId });
