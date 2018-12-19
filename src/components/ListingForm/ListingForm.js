@@ -1,5 +1,7 @@
 import React from 'react';
 import './ListingForm.scss';
+import PropTypes from 'prop-types';
+import authRequests from '../../helpers/data/authRequests';
 
 const defaultListing = {
   address: '',
@@ -48,11 +50,19 @@ class ListingForm extends React.Component {
   }
   // if you just write the e, you can grab the value of the function instead
 
+  formSubmit = (e) => {
+    e.preventDefault();
+    const { onSubmit } = this.props; // bc you're passing it.
+    const myListing = { ...this.state.newListing };
+    myListing.uid = authRequests.getCurrentUid();
+  }
+
   render() {
     const { newListing } = this.state;
     return (
       <div className="ListingForm col">
         <h2>Add New Listing</h2>
+        <form onSubmit={this.formSubmit}>
         <form>
           <div className="form-group">
             <label htmlFor="address">Address</label>
@@ -67,6 +77,7 @@ class ListingForm extends React.Component {
             />
           </div>
           <button className="btn btn-secondary">Save Listing</button>
+        </form>
         </form>
       </div>
     );

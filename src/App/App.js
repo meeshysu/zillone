@@ -67,6 +67,11 @@ class App extends Component {
     // passing in a reference {this.isAuthenticated} below.
   };
 
+  formSubmitEvent = (newListing) => {
+    console.log(newListing);
+    // listingRequests.postRequest(newListing).then().catch();
+  }
+
   render() {
     const logoutClickEvent = () => {
       authRequest.logoutUser();
@@ -94,7 +99,7 @@ class App extends Component {
           <Buildings />
         </div>
         <div className="row">
-          <ListingForm />
+          <ListingForm onSubmit={this.formSubmitEvent} />
         </div>
       </div>
     );
