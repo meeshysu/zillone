@@ -4,9 +4,22 @@ import './ListingForm.scss';
 class ListingForm extends React.Component {
   render() {
     return (
-    <div className="ListingForm col">
-    <h2>Listing Form</h2>
-    </div>
+      <div className="ListingForm col">
+        <h2>Add New Listing</h2>
+        <form>
+          <div className="form-group">
+            <label for="address">Address</label>
+            <input 
+            type="text" 
+            className="form-control" 
+            id="address" 
+            aria-describedby="addressHelp" 
+            placeholder="1234 Main Street Nashville, TN 37209" 
+            />
+          </div>
+          <button className="btn btn-secondary">Save Listing</button>
+        </form>
+      </div>
     );
   }
 }
