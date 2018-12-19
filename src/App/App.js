@@ -67,6 +67,22 @@ class App extends Component {
     // passing in a reference {this.isAuthenticated} below.
   };
 
+  deleteOne = (listingId) => {
+    listingRequests.deleteListing(listingId)
+      .then(() => {
+        listingRequests.getRequest()
+          .then((listings) => {
+            this.setState({ listings });
+          });
+      })
+      .catch((err) => {
+        console.error('error with delete singe', err);
+      });
+  }
+  // once we are done deleting, we need to rerender
+  // need to call this function where the delete button lives
+  // we call listing component thru the listings, so go there
+
   render() {
     const logoutClickEvent = () => {
       authRequest.logoutUser();
@@ -90,7 +106,10 @@ class App extends Component {
       <div className="App">
         <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
         <div className="row">
-          <Listings listings={this.state.listings} />
+          <Listings
+            listings={this.state.listings}
+            deleteSingleListing={this.deleteOne}
+          />
           <Buildings />
         </div>
         <div className="row">
