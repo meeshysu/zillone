@@ -67,6 +67,7 @@ class App extends Component {
     // passing in a reference {this.isAuthenticated} below.
   };
 
+
   deleteOne = (listingId) => {
     listingRequests.deleteListing(listingId)
       .then(() => {
@@ -82,6 +83,17 @@ class App extends Component {
   // once we are done deleting, we need to rerender
   // need to call this function where the delete button lives
   // we call listing component thru the listings, so go there
+
+  formSubmitEvent = (newListing) => {
+    listingRequests.postRequest(newListing)
+      .then(() => {
+        listingRequests.getRequest()
+          .then((listings) => {
+            this.setState({ listings });
+          });
+      })
+      .catch(error => console.error('error on formSubmitEvent', error));
+  }
 
   render() {
     const logoutClickEvent = () => {
@@ -113,7 +125,7 @@ class App extends Component {
           <Buildings />
         </div>
         <div className="row">
-          <ListingForm />
+          <ListingForm onSubmit={this.formSubmitEvent} />
         </div>
       </div>
     );
